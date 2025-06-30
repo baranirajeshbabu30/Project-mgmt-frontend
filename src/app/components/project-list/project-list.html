@@ -1,0 +1,10 @@
+<div class="project-container">
+  <mat-card *ngFor="let project of projects" class="project-card">
+    <mat-card-title>{{ project.title }}</mat-card-title>
+    <mat-card-subtitle>{{ project.status }} | Last updated: {{ project.updatedAt }}</mat-card-subtitle>
+    <mat-card-content>{{ project.description }}</mat-card-content>
+    <div class="actions">
+      <button mat-raised-button color="primary">Edit</button>
+    </div>
+  </mat-card>
+</div>

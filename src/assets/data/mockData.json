@@ -1,0 +1,82 @@
+[
+  {
+    "title": "E-commerce Redesign",
+    "description": "Revamp the UI/UX for the storefront",
+    "status": "active",
+    "createdBy": "admin_001",
+    "createdAt": "2025-06-20T10:00:00Z",
+    "updatedAt": "2025-06-20T10:00:00Z"
+  },
+  {
+    "title": "Mobile App Development",
+    "description": "Develop a cross-platform shopping app",
+    "status": "pending",
+    "createdBy": "admin_002",
+    "createdAt": "2025-06-21T11:00:00Z",
+    "updatedAt": "2025-06-21T11:00:00Z"
+  },
+  {
+    "title": "Backend API Upgrade",
+    "description": "Migrate from Express to Fastify",
+    "status": "completed",
+    "createdBy": "admin_001",
+    "createdAt": "2025-06-19T09:30:00Z",
+    "updatedAt": "2025-06-22T12:00:00Z"
+  },
+  {
+    "title": "SEO Optimization",
+    "description": "Improve Lighthouse scores and page speed",
+    "status": "active",
+    "createdBy": "admin_003",
+    "createdAt": "2025-06-18T14:00:00Z",
+    "updatedAt": "2025-06-24T16:00:00Z"
+  },
+  {
+    "title": "Marketing Campaign Launch",
+    "description": "Run Facebook and Instagram ads",
+    "status": "pending",
+    "createdBy": "admin_002",
+    "createdAt": "2025-06-20T08:00:00Z",
+    "updatedAt": "2025-06-20T08:00:00Z"
+  },
+  {
+    "title": "User Feedback Integration",
+    "description": "Incorporate feedback from beta testers",
+    "status": "active",
+    "createdBy": "admin_001",
+    "createdAt": "2025-06-23T13:45:00Z",
+    "updatedAt": "2025-06-24T10:30:00Z"
+  },
+  {
+    "title": "Database Migration",
+    "description": "Switch from MySQL to PostgreSQL",
+    "status": "completed",
+    "createdBy": "admin_004",
+    "createdAt": "2025-06-15T12:15:00Z",
+    "updatedAt": "2025-06-20T17:00:00Z"
+  },
+  {
+    "title": "Bug Bash Sprint",
+    "description": "Resolve all critical bugs before launch",
+    "status": "active",
+    "createdBy": "admin_003",
+    "createdAt": "2025-06-25T10:00:00Z",
+    "updatedAt": "2025-06-26T09:00:00Z"
+  },
+  {
+    "title": "Documentation Overhaul",
+    "description": "Rewrite README and dev guides",
+    "status": "pending",
+    "createdBy": "admin_002",
+    "createdAt": "2025-06-22T07:30:00Z",
+    "updatedAt": "2025-06-23T12:00:00Z"
+  },
+  {
+    "title": "New Feature Rollout: Chatbot",
+    "description": "Integrate AI chatbot to assist users",
+    "status": "active",
+    "createdBy": "admin_001",
+    "createdAt": "2025-06-28T18:00:00Z",
+    "updatedAt": "2025-06-29T10:00:00Z"
+  }
+]

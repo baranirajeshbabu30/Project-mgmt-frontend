@@ -1,0 +1,13 @@
+<header class="header-container">
+  <div class="left-placeholder">
+    <button mat-raised-button *ngIf="!isProjectFormRoute()" (click)="goToProjectForm()">
+      Project Form
+    </button>
+  </div>
+  
+  <div class="header-title">Project Management</div>
+  
+  <div class="header-icons">
+    <mat-icon>account_circle</mat-icon>
+  </div>
+</header>
