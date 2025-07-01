@@ -3,13 +3,22 @@
 
   <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-container">
     <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Project Name</mat-label>
-      <input matInput formControlName="name" placeholder="Enter project name" />
+      <mat-label>Project Title</mat-label>
+      <input matInput formControlName="title" placeholder="Enter project title" />
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>Description</mat-label>
       <textarea matInput formControlName="description" placeholder="Enter description"></textarea>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Status</mat-label>
+      <mat-select formControlName="status">
+        <mat-option value="Active">Active</mat-option>
+        <mat-option value="In progress">Inprogress</mat-option>
+        <mat-option value="Completed">Completed</mat-option>
+      </mat-select>
     </mat-form-field>
 
     <div class="button-group">

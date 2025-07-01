@@ -13,14 +13,17 @@ export const routes: Routes = [
     {
     path: 'dashboard',
     component: Layout,
+    
     children: [
       { path: 'projects', component: ProjectList },
-      { path: 'project-form', component: ProjectForm }
+      { path: 'project-form', component: ProjectForm },
+      { path: 'project-form/:id', component: ProjectForm }
+
     ]
   },
   { path: 'home', component: Home },
   { path: 'signup', component: Signup },
-  { path: 'signin', component: Signin },
+  { path: 'login', component: Signin },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: '**', redirectTo: 'home' },
 ];

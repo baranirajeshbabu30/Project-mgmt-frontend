@@ -1,10 +1,24 @@
-<div class="project-container">
+<div class="project-container" *ngIf="projects$ | async as projects">
   <mat-card *ngFor="let project of projects" class="project-card">
     <mat-card-title>{{ project.title }}</mat-card-title>
-    <mat-card-subtitle>{{ project.status }} | Last updated: {{ project.updatedAt }}</mat-card-subtitle>
+    <mat-card-subtitle>
+      {{ project.status }} |
+      Last updated: {{ project.updatedAt | date: 'medium' }}
+    </mat-card-subtitle>
     <mat-card-content>{{ project.description }}</mat-card-content>
-    <div class="actions">
-      <button mat-raised-button color="primary">Edit</button>
+
+    <div class="actions" *ngIf="authService.getUserRole() === 'Admin'">
+      <button mat-icon-button color="primary" (click)="onEdit(project)">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button
+  mat-icon-button
+  color="warn"
+  *ngIf="project._id"
+  (click)="onDelete(project._id)"
+>
+  <mat-icon>delete</mat-icon>
+</button>
     </div>
   </mat-card>
 </div>

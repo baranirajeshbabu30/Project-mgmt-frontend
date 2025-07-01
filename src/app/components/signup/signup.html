@@ -1,50 +1,68 @@
 <div class="signup-wrapper">
   <mat-card class="signup-card">
     <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" class="signup-form">
-<h2 style="text-align: center; margin-bottom: 16px;">Signup</h2>
+      <h2 style="text-align: center; margin-bottom: 16px;">Signup</h2>
+
+      <!-- Email -->
       <mat-form-field appearance="fill" class="full-width">
         <mat-label>Email</mat-label>
         <input matInput formControlName="email" type="email" required />
         <mat-error *ngIf="signupForm.get('email')?.hasError('required')">Email is required</mat-error>
         <mat-error *ngIf="signupForm.get('email')?.hasError('email')">Enter a valid email</mat-error>
-        <mat-error *ngIf="emailExists">Email already exists</mat-error>
       </mat-form-field>
 
+      <!-- Username -->
       <mat-form-field appearance="fill" class="full-width">
         <mat-label>Username</mat-label>
         <input matInput formControlName="username" required />
         <mat-error *ngIf="signupForm.get('username')?.hasError('required')">Username is required</mat-error>
-        <mat-error *ngIf="usernameExists">Username already exists</mat-error>
       </mat-form-field>
 
+      <!-- Role Select -->
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Role</mat-label>
+        <mat-select formControlName="role" required>
+          <mat-option *ngFor="let role of roles" [value]="role">{{ role }}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="signupForm.get('role')?.hasError('required')">Role is required</mat-error>
+      </mat-form-field>
+
+      <!-- Password -->
       <mat-form-field appearance="fill" class="full-width">
         <mat-label>Password</mat-label>
         <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password" required />
-        <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" type="button" [attr.aria-label]="'Toggle password visibility'">
+        <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" type="button" aria-label="Toggle password visibility">
           <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
         </button>
         <mat-error *ngIf="signupForm.get('password')?.hasError('required')">Password is required</mat-error>
       </mat-form-field>
 
+      <!-- Confirm Password -->
       <mat-form-field appearance="fill" class="full-width">
-        <mat-label>Confirm Password</mat-label>
-        <input matInput [type]="hideConfirmPassword ? 'password' : 'text'" formControlName="confirmPassword" required />
-        <button mat-icon-button matSuffix (click)="hideConfirmPassword = !hideConfirmPassword" type="button" [attr.aria-label]="'Toggle password visibility'">
-          <mat-icon>{{ hideConfirmPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
-        </button>
-        <mat-error *ngIf="signupForm.get('confirmPassword')?.hasError('required')">Confirm your password</mat-error>
-        <mat-error *ngIf="passwordMismatch">Passwords do not match</mat-error>
-      </mat-form-field>
+  <mat-label>Confirm Password</mat-label>
+  <input matInput [type]="hideConfirmPassword ? 'password' : 'text'" formControlName="confirmPassword" required />
+  <button mat-icon-button matSuffix (click)="hideConfirmPassword = !hideConfirmPassword" type="button" aria-label="Toggle password visibility">
+    <mat-icon>{{ hideConfirmPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+  </button>
+ <mat-error *ngIf="signupForm.get('confirmPassword')?.hasError('required')">
+  Confirm your password
+</mat-error>
 
+<mat-error *ngIf="signupForm.get('confirmPassword')?.hasError('passwordMismatch')">
+  Passwords do not match
+</mat-error>
+
+</mat-form-field>
+
+
+      <!-- Buttons -->
       <div class="button-row">
-  <div class="left-buttons">
-    <button mat-raised-button color="primary" type="submit">Continue</button>
-    <a class="login-link" routerLink="/signin">Login to your account</a>
-  </div>
-  <button mat-button color="accent" type="button" routerLink="/">Back</button>
-</div>
-
-
+        <div class="left-buttons">
+          <button mat-raised-button color="primary" type="submit">Continue</button>
+          <a class="login-link" routerLink="/signin">Login to your account</a>
+        </div>
+        <button mat-button color="accent" type="button" routerLink="/">Back</button>
+      </div>
     </form>
   </mat-card>
 </div>

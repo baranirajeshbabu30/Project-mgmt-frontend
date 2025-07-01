@@ -1,13 +1,17 @@
 <header class="header-container">
   <div class="left-placeholder">
-    <button mat-raised-button *ngIf="!isProjectFormRoute()" (click)="goToProjectForm()">
+    <button mat-raised-button *ngIf="!isProjectFormRoute() && authService.getUserRole() === 'Admin'" (click)="goToProjectForm()">
       Project Form
     </button>
   </div>
-  
+
   <div class="header-title">Project Management</div>
-  
-  <div class="header-icons">
-    <mat-icon>account_circle</mat-icon>
+
+  <div class="header-icons" (mouseenter)="hover = true" (mouseleave)="hover = false">
+    <mat-icon class="account-icon">account_circle</mat-icon>
+    <div class="user-menu" *ngIf="hover">
+     <div class="user-info" style="color: black; padding: 4px 0;">{{ authService.getUserEmail() }}</div>
+      <button mat-button (click)="logout()">Logout</button>
+    </div>
   </div>
 </header>

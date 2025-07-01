@@ -1,12 +1,15 @@
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, FormGroupDirective, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
-import { RouterModule } from '@angular/router';
+import { MatSelectModule } from '@angular/material/select';
+import { RouterModule, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { Auth } from '../../services/auth/auth';
 
 @Component({
   selector: 'app-signup',
@@ -20,40 +23,73 @@ import { CommonModule } from '@angular/common';
     MatIconModule,
     MatButtonModule,
     MatCardModule,
+    MatSelectModule,
     RouterModule,
-    CommonModule
+    CommonModule,
+    MatSnackBarModule,
   ]
 })
-export class Signup {
+export class Signup  {
   signupForm: FormGroup;
   hidePassword = true;
   hideConfirmPassword = true;
-  emailExists = false;
-  usernameExists = false;
-  passwordMismatch = false;
+  roles = ['Admin', 'Viewer'];
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private authService: Auth,
+    private snackBar: MatSnackBar,
+    private router: Router
+  ) {
     this.signupForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       username: ['', Validators.required],
       password: ['', Validators.required],
-      confirmPassword: ['', Validators.required]
-    });
+      confirmPassword: ['', Validators.required],
+      role: ['', Validators.required]
+    }, { validators: this.passwordMatchValidator });
   }
 
-  onSubmit() {
-    const { password, confirmPassword, email, username } = this.signupForm.value;
 
-    this.passwordMismatch = password !== confirmPassword;
 
-    this.emailExists = email === 'test@example.com';
-    this.usernameExists = username === 'admin';
+ passwordMatchValidator(formGroup: FormGroup): null {
+  const passwordControl = formGroup.get('password');
+  const confirmPasswordControl = formGroup.get('confirmPassword');
 
-    if (this.signupForm.valid && !this.passwordMismatch && !this.emailExists && !this.usernameExists) {
-      console.log('Form Data:', this.signupForm.value);
+  if (!passwordControl || !confirmPasswordControl) return null;
+
+  const password = passwordControl.value;
+  const confirmPassword = confirmPasswordControl.value;
+
+  if (password !== confirmPassword) {
+    confirmPasswordControl.setErrors({ passwordMismatch: true });
+  } else {
+    if (confirmPasswordControl.hasError('passwordMismatch')) {
+      confirmPasswordControl.setErrors(null);
+    }
+  }
+
+  return null; 
+}
+
+
+  onSubmit(): void {
+    if (this.signupForm.valid) {
+      const { email, username, password, role } = this.signupForm.value;
+      const payload = { email, username, password, role };
+
+      this.authService.signup(payload).subscribe({
+        next: () => {
+          this.snackBar.open('Signup successful!', 'Close', { duration: 3000 });
+          this.router.navigate(['/login']);
+        },
+        error: (error: { error: { message: string } }) => {
+          const message = error?.error?.message || 'Signup failed!';
+          this.snackBar.open(message, 'Close', { duration: 3000 });
+        }
+      });
     } else {
       this.signupForm.markAllAsTouched();
     }
   }
-  
 }

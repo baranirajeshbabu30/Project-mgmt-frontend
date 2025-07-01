@@ -1,20 +1,23 @@
-import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { Auth} from '../../services/auth/auth';
 
 @Component({
   selector: 'app-signin',
-  imports: [CommonModule,
+  standalone: true,
+  imports: [
+    CommonModule,
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
@@ -22,9 +25,10 @@ import { MatSelectModule } from '@angular/material/select';
     MatButtonModule,
     MatSnackBarModule,
     MatCardModule,
-    MatOptionModule,
     MatSelectModule,
-    RouterLink],
+    RouterLink,
+    HttpClientModule
+  ],
   templateUrl: './signin.html',
   styleUrl: './signin.scss'
 })
@@ -34,8 +38,9 @@ export class Signin {
 
   constructor(
     private fb: FormBuilder,
+    private snackBar: MatSnackBar,
     private router: Router,
-    private snackBar: MatSnackBar
+    private authService: Auth
   ) {
     this.signinForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -45,16 +50,24 @@ export class Signin {
   }
 
   onSubmit(): void {
-    if (this.signinForm.valid) {
-      const { email, password } = this.signinForm.value;
-
-      console.log('Login attempt:', { email, password });
-
-      this.snackBar.open('Login successful!', 'Close', { duration: 3000 });
-      this.router.navigate(['/dashboard/projects']);
-    } else {
-      this.snackBar.open('Please enter valid credentials.', 'Close', { duration: 3000 });
+    if (this.signinForm.invalid) {
+      this.snackBar.open('Please fill all fields correctly.', 'Close', { duration: 3000 });
+      this.signinForm.markAllAsTouched();
+      return;
     }
-  }
 
+    const loginData = this.signinForm.value;
+
+    this.authService.login(loginData).subscribe({
+      next: () => {
+        this.snackBar.open('Login successful!', 'Close', { duration: 3000 });
+        console.log('Login successful, navigating to /dashboard/projects');
+
+        this.router.navigate(['/dashboard/projects']);
+      },
+      error: () => {
+        this.snackBar.open('Login failed!', 'Close', { duration: 3000 });
+      }
+    });
+  }
 }
